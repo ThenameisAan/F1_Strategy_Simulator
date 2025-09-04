@@ -12,3 +12,5 @@ This project is a data-driven tool built with Python to analyze real Formula 1 r
 
 <h2>How it Works</h2>
 <p>The project follows a four step data analysis pipeline to go from raw data to a final prediction</p>
+<p><h4>Data Sourcing & Cleaning</h4></p>
+
