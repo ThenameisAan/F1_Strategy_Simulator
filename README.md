@@ -1,3 +1,4 @@
+<h1>F1 Race Strategy Simulator & Predictor</h1>
 <img width="1915" height="876" alt="image" src="https://github.com/user-attachments/assets/61744019-85ec-4196-b940-9115b7368cb5" />
 
 This project is a data-driven tool built with Python to analyze real Formula 1 race data, model tyre performance, and predict the optimal pit stop strategy.
