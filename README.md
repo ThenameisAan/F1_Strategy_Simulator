@@ -4,8 +4,8 @@
 This project is a data-driven tool built with Python to analyze real Formula 1 race data, model tyre performance, and predict the optimal pit stop strategy. The application takes raw lap-by-lap data from an F1 Grand Prix, calculates the true degradation rate of each tyre compound while correcting for confounding variables like fuel load, and simulates thousands of potential strategies to find the fastest way to the finish line. The entire analysis is presented in an interactive web application built with Streamlit.
 
 <h2>Key Features</h2>
-<h5>Data-Driven Tyre Model:</h5>Automatically calculates tyre degradation rates from real race data.
-<h5>Intelligent Data Cleaning:</h5>Corrects for the masking effect of fuel burn and removes outlier laps from on-track incidents like Safety Cars.
+<b>Data-Driven Tyre Model:</b>Automatically calculates tyre degradation rates from real race data.
+<b>Intelligent Data Cleaning:</b>Corrects for the masking effect of fuel burn and removes outlier laps from on-track incidents like Safety Cars.
 <h5>Strategy Simulation Engine:</h5>Predicts the total race time for any given one-stop or two-stop strategy.
 <h5>Automated Optimal Search:</h5>Programmatically searches thousands of possible pit stop windows to find the absolute fastest strategy.
 <h5>Interactive Dashboard:</h5>A user-friendly web interface built with Streamlit to visualize driver performance and display the final strategic recommendations.
