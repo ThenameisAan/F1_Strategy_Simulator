@@ -22,6 +22,9 @@ This project is a data-driven tool built with Python to analyze real Formula 1 r
 <p>The core of the predictor is a robust model of a tyre performance. A key insight during this project was that the raw lap times are misleading; at the start of a race, cars get faster each lap as they burn fuel, masking the effect of tyre wear. </p>
 <p>To solve this, the model calculates a "Fuel-Corrected Lap Time" for each lap. By adding back the time gained from the car getting lighter, we can isolate the true degradation rate of the tyres. A linear regression model is then fitted to this corrected data to derive a single metric which is <b>'degradation in seconds per lap'</b></p>
 <img width="1460" height="948" alt="image" src="https://github.com/user-attachments/assets/77712e58-a4f8-4cb8-8bf9-f46b2c4d907c" />
-
+<h4>3. Simulating Race Strategies</h4>
+<p>With accurate degradation numbers, the applications can predict the time for any lap in a stint using the following formula</p>
+<b><i>Predicted Time = Base Time + (Tyre Life x Degradation) - (Lap Number x Fuel Effect)</i></b>
+<p>A simulation engine uses this formula to calculate the total predicted time for any sequence of tyre stints, adding a time penalty for each pit stop. </p>
 
 
