@@ -5,7 +5,7 @@ This project is a data-driven tool built with Python to analyze real Formula 1 r
 
 <h2>Key Features</h2>
 <b>Data-Driven Tyre Model:</b> Automatically calculates tyre degradation rates from real race data.
-<b>Intelligent Data Cleaning:</b> Corrects for the masking effect of fuel burn and removes outlier laps from on-track incidents like Safety Cars.
+<p></p><b>Intelligent Data Cleaning:</b> Corrects for the masking effect of fuel burn and removes outlier laps from on-track incidents like Safety Cars.</p>
 <b>Strategy Simulation Engine:</b> Predicts the total race time for any given one-stop or two-stop strategy.
 <b>Automated Optimal Search:</b> Programmatically searches thousands of possible pit stop windows to find the absolute fastest strategy.
 <b>Interactive Dashboard:</b> A user-friendly web interface built with Streamlit to visualize driver performance and display the final strategic recommendations.
