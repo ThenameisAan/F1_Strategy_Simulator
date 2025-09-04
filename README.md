@@ -26,5 +26,6 @@ This project is a data-driven tool built with Python to analyze real Formula 1 r
 <p>With accurate degradation numbers, the applications can predict the time for any lap in a stint using the following formula:</p>
 <p></p><b><i>Predicted Time = Base Time + (Tyre Life x Degradation) - (Lap Number x Fuel Effect)</i></b></p>
 <p>A simulation engine uses this formula to calculate the total predicted time for any sequence of tyre stints, adding a time penalty for each pit stop.</p>
-
+<h4>4. Finding the Optimal Strategy</h4>
+<p>Instead of manually comparing a few strategies, the predictor uses an automated search to find the true optimum. It</p>
 
