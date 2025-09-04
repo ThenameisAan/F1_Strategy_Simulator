@@ -9,3 +9,6 @@ This project is a data-driven tool built with Python to analyze real Formula 1 r
 <p><b>3. Strategy Simulation Engine:</b> Predicts the total race time for any given one-stop or two-stop strategy.</p>
 <p></p><b>4. Automated Optimal Search:</b> Programmatically searches thousands of possible pit stop windows to find the absolute fastest strategy.</p>
 <p><b>5. Interactive Dashboard:</b> A user-friendly web interface built with Streamlit to visualize driver performance and display the final strategic recommendations. </p>
+
+<h2>How it Works</h2>
+<p>The project follows a four step data analysis pipeline to go from raw data to a final prediction</p>
