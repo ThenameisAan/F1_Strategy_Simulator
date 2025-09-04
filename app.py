@@ -4,7 +4,7 @@ import numpy as np
 import fastf1 as ff1
 import matplotlib.pyplot as plt
 
-# --- Model Functions (Copied from previous scripts) ---
+# --- Model Functions ---
 
 @st.cache_data(ttl=3600) # Cache data for 1 hour
 def load_data(year, race):
@@ -45,7 +45,7 @@ def calculate_degradation(laps, driver, compound, fuel_effect_per_lap=0.04):
 
 def simulate_stint(start_lap, stint_length, compound, degradation_summary, base_lap_time, fuel_effect_per_lap):
     """Calculates the total time for a single race stint."""
-    #Check if  the compound exists in our degradation data
+    #Check if  the compound exists in degradation data
 
     if compound not in degradation_summary['Compound'].values:
         return 999999
@@ -223,14 +223,14 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
             optimal_pit_lap_2 = np.atleast_1d(overall_best['Pit Lap 2'])[0]  # extract single value
             optimal_time_seconds = float(np.atleast_1d(overall_best['Total Time (s)'])[0])
 
-# Handle NaN for second pit stop
+    # Handle NaN for second pit stop
         if pd.isna(optimal_pit_lap_2):
          optimal_pit_laps_str = str(optimal_pit_lap_1)
         else:
          optimal_pit_lap_2 = int(optimal_pit_lap_2)
          optimal_pit_laps_str = f"{optimal_pit_lap_1}, {optimal_pit_lap_2}"
 
-        # Now, all variables are guaranteed to be the correct simple types
+        
         st.success(f"**Optimal Strategy Found:** A **{optimal_strategy_name}** strategy, pitting on lap(s) **{optimal_pit_laps_str}**.")
         st.info(f"Predicted total race time: **{optimal_time_seconds / 60:.2f} minutes**.")
 
@@ -289,4 +289,5 @@ if selected_drivers and compound_to_analyze:
             ax.set_ylabel("Fuel-Corrected Lap Time (s)")
             ax.set_title(f"Degradation Comparison on {compound_to_analyze} Tyre")
             ax.legend()
+
             st.pyplot(fig)
