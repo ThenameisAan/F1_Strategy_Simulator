@@ -27,5 +27,13 @@ This project is a data-driven tool built with Python to analyze real Formula 1 r
 <p></p><b><i>Predicted Time = Base Time + (Tyre Life x Degradation) - (Lap Number x Fuel Effect)</i></b></p>
 <p>A simulation engine uses this formula to calculate the total predicted time for any sequence of tyre stints, adding a time penalty for each pit stop.</p>
 <h4>4. Finding the Optimal Strategy</h4>
-<p>Instead of manually comparing a few strategies, the predictor uses an automated search to find the true optimum. It</p>
+<p>Instead of manually comparing a few strategies, the predictor uses an automated search to find the true optimum. It programmatically simulates every possible one-stop and two-stop strategy within a realistic pit window, using nested loops to cover thousands of combinations. The strategy with the lowest total simulates race time is then presented as the final recommendation. </p>
+<h4> Technologies Used </h4>
+<ul>
+  <li> Language: Python </li>
+  <li> Data Analysis: Pandas, NumPy </li>
+  <li> F1 Data API: fastf1 </li>
+  <li> Visualization: Matplotlib </li>
+  <li> Web Framework: Streamlit </li>
+</ul>
 
