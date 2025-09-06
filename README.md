@@ -36,4 +36,19 @@ This project is a data-driven tool built with Python to analyze real Formula 1 r
   <li> Visualization: Matplotlib </li>
   <li> Web Framework: Streamlit </li>
 </ul>
+<h4>Getting Started</h4>
+<h5>Prerequisites</h5>
+<ul>
+  <li> Python 3.9+</li>
+  <li> Pip </li>
+</ul>
+<h4> Installation </h4>
+<p>1. Clone the repository</p>
+<p><i>git clone [https://github.com/ThenameisAan/F1_Strategy_Simulator.git](https://github.com/ThenameisAan/F1_Strategy_Simulator.git)
+cd F1_Strategy_Simulator</i></p>
+<p>2. Install the required packages: </p>
+<b>pip install -r requirements.txt</i></b>
+<p><i>(Note: You will need to create a requirements.txt file by running pip freeze >requirements.txt in your terminal)</i></p>
+
+
 
