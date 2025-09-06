@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import fastf1 as ff1
 import matplotlib.pyplot as plt
+import os
 
 CACHE_DIR = 'cache'
 if not os.path.exists(CACHE_DIR):
@@ -296,4 +297,5 @@ if selected_drivers and compound_to_analyze:
             ax.legend()
 
             st.pyplot(fig)
+
 
