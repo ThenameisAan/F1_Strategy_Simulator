@@ -47,7 +47,7 @@ This project is a data-driven tool built with Python to analyze real Formula 1 r
 <p><i>git clone [https://github.com/ThenameisAan/F1_Strategy_Simulator.git](https://github.com/ThenameisAan/F1_Strategy_Simulator.git)
 cd F1_Strategy_Simulator</i></p>
 <p>2. Install the required packages: </p>
-<b>pip install -r requirements.txt</i></b>
+<b><i>pip install -r requirements.txt</i></b>
 <h4>Running the Application</h4>
 <p>To launch the interactive dashboard, run the following command in your terminal: </p>
 <p><i>streamlit run app.py</i></p>
