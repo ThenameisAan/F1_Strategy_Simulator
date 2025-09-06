@@ -4,6 +4,11 @@ import numpy as np
 import fastf1 as ff1
 import matplotlib.pyplot as plt
 
+CACHE_DIR = 'cache'
+if not os.path.exists(CACHE_DIR):
+    os.makedirs(CACHE_DIR)
+ff1.Cache.enable_cache(CACHE_DIR)
+
 # --- Model Functions ---
 
 @st.cache_data(ttl=3600) # Cache data for 1 hour
@@ -291,3 +296,4 @@ if selected_drivers and compound_to_analyze:
             ax.legend()
 
             st.pyplot(fig)
+
