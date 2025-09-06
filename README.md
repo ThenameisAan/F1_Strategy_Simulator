@@ -48,7 +48,6 @@ This project is a data-driven tool built with Python to analyze real Formula 1 r
 cd F1_Strategy_Simulator</i></p>
 <p>2. Install the required packages: </p>
 <b>pip install -r requirements.txt</i></b>
-<p><i>(Note: You will need to create a requirements.txt file by running pip freeze >requirements.txt in your terminal)</i></p>
 <h4>Running the Application</h4>
 <p>To launch the interactive dashboard, run the following command in your terminal: </p>
 <p><i>streamlit run app.py</i></p>
