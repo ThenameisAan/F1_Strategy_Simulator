@@ -152,7 +152,7 @@ session_type = st.sidebar.selectbox("Select Session to Analyze:", options=['Race
 total_laps = st.sidebar.text_input("Total Laps", value=57)
 pit_stop_loss = st.sidebar.text_input("Pit Stop Time Loss (s)", value=22.0)
 base_lap_time = st.sidebar.text_input("Base Lap Time (s)", value=99.5)
-fuel_effect = st.sidebar.text_input("Fuel Effect (s/lap)", value=0.04, format="%.3f")
+fuel_effect = st.sidebar.number_input("Fuel Effect (s/lap)", value=0.04, format="%.3f")
 
 # Map user-friendly session names to the codes fastf1 expects
 session_mapping = {
@@ -288,6 +288,7 @@ if st.session_state.analysis_run:
             
 
     
+
 
 
 
