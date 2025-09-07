@@ -150,7 +150,7 @@ year = st.sidebar.number_input("Year", value=2023, min_value=2018)
 race = st.sidebar.text_input("Race Name", value="Bahrain")
 session_type = st.sidebar.selectbox("Select Session to Analyze:", options=['Race', 'FP1', 'FP2', 'FP3', 'Qualifying'])
 total_laps = st.sidebar.number_input("Total Laps", value=57)
-pit_stop_loss = st.sidebar.number_input("Pit Stop Time Loss (s)", value=22.0)
+pit_stop_loss = st.sidebar.text_input("Pit Stop Time Loss (s)", value=22.0)
 base_lap_time = st.sidebar.number_input("Base Lap Time (s)", value=99.5)
 fuel_effect = st.sidebar.number_input("Fuel Effect (s/lap)", value=0.04, format="%.3f")
 
@@ -288,6 +288,7 @@ if st.session_state.analysis_run:
             
 
     
+
 
 
 
