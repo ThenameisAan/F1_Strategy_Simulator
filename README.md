@@ -55,6 +55,7 @@ cd F1_Strategy_Simulator</i></p>
 <ul>
   <li> Context Awareness Penalties: Adding penalties for traffic, tyre warm-up, and track position value to create an even more realistic simulation</li>
 <li> Safety Car Proabability: Incorporating a Monte Carlo simulations to model the likelihood of a safety cat and its impact on strategy.</li>
+<li>More Complex Models: Using non-linear models to better capture the "cliff" where tyre performance drops off sharply.</li>
 <ul>
 
 
