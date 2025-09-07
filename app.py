@@ -174,7 +174,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
 
         st.header("Optimal Strategy Prediction")
 
-            one_stop_strategies = [
+        one_stop_strategies = [
                 find_best_one_stop(['SOFT', 'HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
                 find_best_one_stop(['MEDIUM', 'HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
                 find_best_one_stop(['HARD', 'SOFT'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
@@ -298,6 +298,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
             
 
     
+
 
 
 
