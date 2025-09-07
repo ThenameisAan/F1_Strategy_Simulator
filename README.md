@@ -2,6 +2,7 @@
 <img width="1915" height="876" alt="image" src="https://github.com/user-attachments/assets/61744019-85ec-4196-b940-9115b7368cb5" />
 
 This project is a data-driven tool built with Python to analyze real Formula 1 race data, model tyre performance, and predict the optimal pit stop strategy. The application takes raw lap-by-lap data from an F1 Grand Prix, calculates the true degradation rate of each tyre compound while correcting for confounding variables like fuel load, and simulates thousands of potential strategies to find the fastest way to the finish line. The entire analysis is presented in an interactive web application built with Streamlit.
+</p>
 
 <h2>Key Features</h2>
 <b>1. Data-Driven Tyre Model:</b> Automatically calculates tyre degradation rates from real race data.
@@ -42,6 +43,7 @@ This project is a data-driven tool built with Python to analyze real Formula 1 r
   <li> Python 3.9+</li>
   <li> Pip </li>
 </ul>
+
 <h4> Installation </h4>
 <p>1. Clone the repository</p>
 <p><i>git clone [https://github.com/ThenameisAan/F1_Strategy_Simulator.git](https://github.com/ThenameisAan/F1_Strategy_Simulator.git)
