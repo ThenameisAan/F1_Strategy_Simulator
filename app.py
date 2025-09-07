@@ -140,15 +140,30 @@ st.title("F1 Race Strategy Predictor")
 st.sidebar.header("Race Parameters")
 year = st.sidebar.number_input("Year", value=2023, min_value=2018)
 race = st.sidebar.text_input("Race Name", value="Bahrain")
+
+## --- Sidebar for user inputs ---
+session_type = st.sidebar.selection(
+    "Select Session to Analyze:",
+    options=['Race', 'FP1', 'FP2', 'FP3', 'Qualifying']
+)
 total_laps = st.sidebar.number_input("Total Laps", value=57)
 pit_stop_loss = st.sidebar.number_input("Pit Stop Time Loss (s)", value=22.0)
 base_lap_time = st.sidebar.number_input("Base Lap Time (s)", value=99.5)
 fuel_effect = st.sidebar.number_input("Fuel Effect (s/lap)", value=0.04, format="%.3f")
 
+#Map user-friendly session names to the codes fastf1 expects
+session_mapping = {
+    'Race':'R',
+    'FP1': 'FP1',
+    'FP2': 'FP2',
+    'FP3': 'FP3',
+    'Qualifying': 'Q'
+    }
+session_code = session_mapping[session_type]
 
 if st.button("Press here to Analyze Race and Predict Strategy"):
     # Load data
-    laps_data = load_data(year, race)
+    laps_data = load_data(year, race, session_code)
 
     if laps_data is not None:
         col1, col2, = st.columns(2)
@@ -297,6 +312,7 @@ st.pyplot(fig)
             
 
     
+
 
 
 
