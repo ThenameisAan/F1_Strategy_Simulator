@@ -134,6 +134,9 @@ def find_best_two_stop(compounds, total_laps, degradation_summary, base_lap_time
 
 # --- Streamlit App ---
 
+# --- Streamlit App ---
+
+st.set_page_config(layout="wide")
 st.title("F1 Race Strategy Predictor")
 
 # Sidebar for user inputs
@@ -145,50 +148,48 @@ pit_stop_loss = st.sidebar.number_input("Pit Stop Time Loss (s)", value=22.0)
 base_lap_time = st.sidebar.number_input("Base Lap Time (s)", value=99.5)
 fuel_effect = st.sidebar.number_input("Fuel Effect (s/lap)", value=0.04, format="%.3f")
 
-
-if st.button("Press here to Analyze Race and Predict Strategy"):
-    # Load data
+if st.sidebar.button("Analyze Race and Predict Strategy"):
     laps_data = load_data(year, race)
 
     if laps_data is not None:
-        col1, col2, = st.columns(2)
+        st.header(f"Analysis for {year} {race} GP")
+        
+        # --- Main Results in Columns ---
+        col1, col2 = st.columns(2)
 
-        # Calculate degradation model
         with col1:
-         st.header(f"Analysis for {year} {race} GP")
-         drivers = laps_data['Driver'].unique()
-         compounds = laps_data['Compound'].unique()
-         reliable_stints = []
-         for driver in drivers:
-            for compound in compounds:
-                degradation = calculate_degradation(laps_data, driver, compound, fuel_effect)
-                if degradation is not None:
-                    reliable_stints.append({'Driver': driver, 'Compound': compound, 'Degradation': degradation})
-        
-        reliable_summary = pd.DataFrame(reliable_stints)
-        final_degradation_summary = reliable_summary.groupby('Compound')['Degradation'].mean().reset_index()
+            # Calculate and display degradation model
+            drivers = laps_data['Driver'].unique()
+            compounds = laps_data['Compound'].unique()
+            reliable_stints = []
+            for driver in drivers:
+                for compound in compounds:
+                    degradation = calculate_degradation(laps_data, driver, compound, fuel_effect)
+                    if degradation is not None:
+                        reliable_stints.append({'Driver': driver, 'Compound': compound, 'Degradation': degradation})
+            
+            reliable_summary = pd.DataFrame(reliable_stints)
+            final_degradation_summary = reliable_summary.groupby('Compound')['Degradation'].mean().reset_index()
+            
+            st.subheader("Tyre Degradation Model")
+            st.dataframe(final_degradation_summary.sort_values(by='Degradation'))
 
-        st.subheader("Tyre Degradation Model")
-        st.write("Average degradation in seconds per lap, calculated from reliable race stints:")
-        st.dataframe(final_degradation_summary.sort_values(by='Degradation'))
-       
-        
-    with col2:
-        st.subheader("Optimal Strategy Prediction")
+        with col2:
+            st.subheader("Optimal Strategy Prediction")
             
             # Find best strategies
-        all_results_list = []
-        one_stop_options = [['SOFT', 'HARD'], ['MEDIUM', 'HARD'], ['HARD', 'SOFT'], ['SOFT', 'MEDIUM'], ['HARD', 'MEDIUM'], ['MEDIUM', 'SOFT']]
-        two_stop_options = [['SOFT', 'HARD', 'SOFT'], ['SOFT', 'HARD', 'HARD']]
+            all_results_list = []
+            one_stop_options = [['SOFT', 'HARD'], ['MEDIUM', 'HARD'], ['HARD', 'SOFT'], ['SOFT', 'MEDIUM'], ['HARD', 'MEDIUM'], ['MEDIUM', 'SOFT']]
+            two_stop_options = [['SOFT', 'HARD', 'SOFT'], ['SOFT', 'HARD', 'HARD']]
             
-        for comps in one_stop_options:
+            for comps in one_stop_options:
                 result = find_best_one_stop(comps, total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss)
                 if result is not None: all_results_list.append(result)
-        for comps in two_stop_options:
+            for comps in two_stop_options:
                 result = find_best_two_stop(comps, total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss)
                 if result is not None: all_results_list.append(result)
             
-        if all_results_list:
+            if all_results_list:
                 all_results = pd.DataFrame(all_results_list)
                 overall_best = all_results.loc[all_results['Total Time (s)'].idxmin()]
                 
@@ -207,11 +208,11 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
                 
                 st.success(f"**Optimal Strategy Found:** A **{optimal_strategy_name}** strategy, pitting on lap(s) **{optimal_pit_laps_str}**.")
                 st.info(f"Predicted total race time: **{optimal_time_seconds / 60:.2f} minutes**.")
-        else:
+            else:
                 st.warning("Could not find any viable strategies based on the available data.")
 
         # --- Interactive Deep Dive in an Expander (Full Width) ---
-        with st.subheader("Driver Performance Deep Dive"):
+        with st.expander("Driver Performance Deep Dive"):
             all_drivers = sorted(laps_data['Driver'].unique())
             selected_drivers = st.multiselect("Select Drivers to Compare:", options=all_drivers, default=['VER', 'PER', 'ALO'])
             compound_to_analyze = st.selectbox("Select Tyre Compound:", options=sorted(laps_data['Compound'].unique()))
@@ -249,6 +250,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
             
 
     
+
 
 
 
