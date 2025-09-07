@@ -240,7 +240,7 @@ if st.session_state.analysis_run:
         st.write("Select multiple drivers and a tyre compound to compare their degradation.")
 
         all_drivers = sorted(laps_data['Driver'].unique())
-        selected_drivers = st.multoselect(
+        selected_drivers = st.multiselect(
             "Select Drivers to Compare:",
             options=all_drivers,
             default=[d for d in ['VER', 'HAM', 'LEC'] if d in all_drivers]
@@ -288,6 +288,7 @@ if st.session_state.analysis_run:
             
 
     
+
 
 
 
