@@ -247,56 +247,57 @@ laps_data = load_data(year, race)
 st.header("Driver Performance Deep Dive")
 st.write("Select multiple drivers and a tyre compound to compare their degradation.")
 
-            all_drivers = sorted(laps_data['Driver'].unique())
-            selected_drivers = st.multiselect(
-            "Select Drivers to Compare:",
-            options=all_drivers,
-            default=['VER', 'GAS', 'TSU']
-            )
-            compound_to_analyze = st.selectbox(
-            "Select Tyre Compound:",
-            options=sorted(laps_data['Compound'].unique())
-            )
-        
-            if selected_drivers and compound_to_analyze:
-                fig, ax = plt.subplots(figsize=(10, 6))
-            for driver in selected_drivers:
-                stint_data = laps_data.pick_driver(driver).loc[laps_data['Compound'] == compound_to_analyze].copy()
-                stint_data = stint_data.loc[stint_data['PitInTime'].isnull() & stint_data['PitOutTime'].isnull()].copy()
-                if len(stint_data) < 5: continue
-                
-                stint_data['LapTimeSeconds'] = stint_data['LapTime'].dt.total_seconds()
-                median = stint_data['LapTimeSeconds'].median()
-                stint_data = stint_data.loc[stint_data['LapTimeSeconds'] < median * 1.07].copy()
-                if len(stint_data) < 5: continue
-                
-                fuel_correction = stint_data['LapNumber'] * fuel_effect
-                stint_data['CorrectedLapTime'] = stint_data['LapTimeSeconds'] + fuel_correction
-                
-                # Explicitly define x and y for the current driver in the loop
-                x_values = stint_data['TyreLife']
-                y_values = stint_data['CorrectedLapTime']
-                
-                # Plot this driver's scatter points
-                scatter = ax.scatter(x_values, y_values, label=driver)
-                
-                # Get the color of the scatter plot to use for the trend line
-                plot_color = scatter.get_facecolor()[0]
-                
-                # Fit and plot the trend line using this driver's specific x and y values
-                coeffs = np.polyfit(x_values, y_values, 1)
-                line = np.poly1d(coeffs)
-                ax.plot(x_values, line(x_values), color=plot_color, label=f"{driver} Trend")
-                
-            ax.set_xlabel("Tyre Life (Laps)")
-            ax.set_ylabel("Fuel-Corrected Lap Time (s)")
-            ax.set_title(f"Degradation Comparison on {compound_to_analyze} Tyre")
-            ax.legend()
+all_drivers = sorted(laps_data['Driver'].unique())
+selected_drivers = st.multiselect(
+"Select Drivers to Compare:",
+options=all_drivers,
+default=['VER', 'GAS', 'TSU']
+)
+compound_to_analyze = st.selectbox(
+"Select Tyre Compound:",
+options=sorted(laps_data['Compound'].unique())
+)
 
-            st.pyplot(fig)
+if selected_drivers and compound_to_analyze:
+    fig, ax = plt.subplots(figsize=(10, 6))
+for driver in selected_drivers:
+    stint_data = laps_data.pick_driver(driver).loc[laps_data['Compound'] == compound_to_analyze].copy()
+    stint_data = stint_data.loc[stint_data['PitInTime'].isnull() & stint_data['PitOutTime'].isnull()].copy()
+    if len(stint_data) < 5: continue
+    
+    stint_data['LapTimeSeconds'] = stint_data['LapTime'].dt.total_seconds()
+    median = stint_data['LapTimeSeconds'].median()
+    stint_data = stint_data.loc[stint_data['LapTimeSeconds'] < median * 1.07].copy()
+    if len(stint_data) < 5: continue
+    
+    fuel_correction = stint_data['LapNumber'] * fuel_effect
+    stint_data['CorrectedLapTime'] = stint_data['LapTimeSeconds'] + fuel_correction
+    
+    # Explicitly define x and y for the current driver in the loop
+    x_values = stint_data['TyreLife']
+    y_values = stint_data['CorrectedLapTime']
+    
+    # Plot this driver's scatter points
+    scatter = ax.scatter(x_values, y_values, label=driver)
+    
+    # Get the color of the scatter plot to use for the trend line
+    plot_color = scatter.get_facecolor()[0]
+    
+    # Fit and plot the trend line using this driver's specific x and y values
+    coeffs = np.polyfit(x_values, y_values, 1)
+    line = np.poly1d(coeffs)
+    ax.plot(x_values, line(x_values), color=plot_color, label=f"{driver} Trend")
+    
+ax.set_xlabel("Tyre Life (Laps)")
+ax.set_ylabel("Fuel-Corrected Lap Time (s)")
+ax.set_title(f"Degradation Comparison on {compound_to_analyze} Tyre")
+ax.legend()
+
+st.pyplot(fig)
             
 
     
+
 
 
 
