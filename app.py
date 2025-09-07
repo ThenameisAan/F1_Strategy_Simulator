@@ -243,9 +243,9 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
             st.warning("Could not find any viable strategies based on the data.")
         
             # --- Interactive Driver Degradation Comparison ---
-            laps_data = load_data(year, race)
-            st.header("Driver Performance Deep Dive")
-            st.write("Select multiple drivers and a tyre compound to compare their degradation.")
+laps_data = load_data(year, race)
+st.header("Driver Performance Deep Dive")
+st.write("Select multiple drivers and a tyre compound to compare their degradation.")
 
             all_drivers = sorted(laps_data['Driver'].unique())
             selected_drivers = st.multiselect(
@@ -297,6 +297,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
             
 
     
+
 
 
 
