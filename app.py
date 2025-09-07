@@ -177,14 +177,14 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
         st.subheader("Optimal Strategy Prediction")
             
             # Find best strategies
-            all_results_list = []
-            one_stop_options = [['SOFT', 'HARD'], ['MEDIUM', 'HARD'], ['HARD', 'SOFT'], ['SOFT', 'MEDIUM'], ['HARD', 'MEDIUM'], ['MEDIUM', 'SOFT']]
-            two_stop_options = [['SOFT', 'HARD', 'SOFT'], ['SOFT', 'HARD', 'HARD']]
+        all_results_list = []
+        one_stop_options = [['SOFT', 'HARD'], ['MEDIUM', 'HARD'], ['HARD', 'SOFT'], ['SOFT', 'MEDIUM'], ['HARD', 'MEDIUM'], ['MEDIUM', 'SOFT']]
+        two_stop_options = [['SOFT', 'HARD', 'SOFT'], ['SOFT', 'HARD', 'HARD']]
             
-            for comps in one_stop_options:
+        for comps in one_stop_options:
                 result = find_best_one_stop(comps, total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss)
                 if result is not None: all_results_list.append(result)
-            for comps in two_stop_options:
+        for comps in two_stop_options:
                 result = find_best_two_stop(comps, total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss)
                 if result is not None: all_results_list.append(result)
             
@@ -249,6 +249,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
             
 
     
+
 
 
 
