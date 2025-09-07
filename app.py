@@ -171,9 +171,8 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
         st.subheader("Tyre Degradation Model")
         st.write("Average degradation in seconds per lap, calculated from reliable race stints:")
         st.dataframe(final_degradation_summary.sort_values(by='Degradation'))
-        
-        with col2:
-            st.header("Optimal Strategy Prediction")
+
+        st.header("Optimal Strategy Prediction")
 
             one_stop_strategies = [
                 find_best_one_stop(['SOFT', 'HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
@@ -241,27 +240,26 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
         st.info(f"Predicted total race time: **{optimal_time_seconds / 60:.2f} minutes**.")
 
     else:
-            st.warning("Could not  find any viable strategies based on the data.")
+            st.warning("Could not find any viable strategies based on the data.")
+        
+        with col2:
+            # --- Interactive Driver Degradation Comparison ---
+            laps_data = load_data(year, race)
+            st.header("Driver Performance Deep Dive")
+            st.write("Select multiple drivers and a tyre compound to compare their degradation.")
 
-    
-
-# --- Interactive Driver Degradation Comparison ---
-laps_data = load_data(year, race)
-st.header("Driver Performance Deep Dive")
-st.write("Select multiple drivers and a tyre compound to compare their degradation.")
-
-all_drivers = sorted(laps_data['Driver'].unique())
-selected_drivers = st.multiselect(
+            all_drivers = sorted(laps_data['Driver'].unique())
+            selected_drivers = st.multiselect(
             "Select Drivers to Compare:",
             options=all_drivers,
             default=['VER', 'GAS', 'TSU']
-        )
-compound_to_analyze = st.selectbox(
+            )
+            compound_to_analyze = st.selectbox(
             "Select Tyre Compound:",
             options=sorted(laps_data['Compound'].unique())
-        )
+            )
         
-if selected_drivers and compound_to_analyze:
+            if selected_drivers and compound_to_analyze:
             fig, ax = plt.subplots(figsize=(10, 6))
             for driver in selected_drivers:
                 stint_data = laps_data.pick_driver(driver).loc[laps_data['Compound'] == compound_to_analyze].copy()
@@ -297,5 +295,10 @@ if selected_drivers and compound_to_analyze:
             ax.legend()
 
             st.pyplot(fig)
+            
+
+    
+
+
 
 
