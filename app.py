@@ -145,13 +145,34 @@ if 'laps_data' not in st.session_state:
 
 
 # --- Sidebar for user inputs ---
+# --- Sidebar for user inputs ---
 st.sidebar.header("Race Parameters")
 year = st.sidebar.number_input("Year", value=2023, min_value=2018)
 race = st.sidebar.text_input("Race Name", value="Bahrain")
 session_type = st.sidebar.selectbox("Select Session to Analyze:", options=['Race', 'FP1', 'FP2', 'FP3', 'Qualifying'])
-total_laps = st.sidebar.text_input("Total Laps", value=57)
-pit_stop_loss = st.sidebar.text_input("Pit Stop Time Loss (s)", value=22.0)
-base_lap_time = st.sidebar.text_input("Base Lap Time (s)", value=99.5)
+
+# Handle text inputs with proper type conversion and error checking
+try:
+    total_laps_str = st.sidebar.text_input("Total Laps", value="57")
+    total_laps = int(total_laps_str)
+except ValueError:
+    st.sidebar.error("Please enter a valid integer for Total Laps.")
+    total_laps = 57 # Fallback to default
+
+try:
+    pit_stop_loss_str = st.sidebar.text_input("Pit Stop Time Loss (s)", value="22.0")
+    pit_stop_loss = float(pit_stop_loss_str)
+except ValueError:
+    st.sidebar.error("Please enter a valid number for Pit Stop Time Loss.")
+    pit_stop_loss = 22.0 # Fallback to default
+
+try:
+    base_lap_time_str = st.sidebar.text_input("Base Lap Time (s)", value="99.5")
+    base_lap_time = float(base_lap_time_str)
+except ValueError:
+    st.sidebar.error("Please enter a valid number for Base Lap Time.")
+    base_lap_time = 99.5 # Fallback to default
+
 fuel_effect = st.sidebar.number_input("Fuel Effect (s/lap)", value=0.04, format="%.3f")
 
 # Map user-friendly session names to the codes fastf1 expects
@@ -288,6 +309,7 @@ if st.session_state.analysis_run:
             
 
     
+
 
 
 
