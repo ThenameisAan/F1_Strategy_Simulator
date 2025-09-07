@@ -183,7 +183,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
                 find_best_one_stop(['MEDIUM', 'SOFT'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
             ]   
             
-            two_stop_strategies = [
+        two_stop_strategies = [
                 find_best_two_stop(['SOFT','SOFT','MEDIUM'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
                 find_best_two_stop(['SOFT','SOFT','HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
                 find_best_two_stop(['SOFT','MEDIUM','SOFT'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
@@ -298,6 +298,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
             
 
     
+
 
 
 
