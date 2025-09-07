@@ -188,7 +188,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
                 result = find_best_two_stop(comps, total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss)
                 if result is not None: all_results_list.append(result)
             
-            if all_results_list:
+        if all_results_list:
                 all_results = pd.DataFrame(all_results_list)
                 overall_best = all_results.loc[all_results['Total Time (s)'].idxmin()]
                 
@@ -249,6 +249,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
             
 
     
+
 
 
 
