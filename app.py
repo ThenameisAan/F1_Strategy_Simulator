@@ -242,7 +242,6 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
     else:
             st.warning("Could not find any viable strategies based on the data.")
         
-    with col2:
             # --- Interactive Driver Degradation Comparison ---
             laps_data = load_data(year, race)
             st.header("Driver Performance Deep Dive")
@@ -298,6 +297,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
             
 
     
+
 
 
 
