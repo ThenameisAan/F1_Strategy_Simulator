@@ -272,16 +272,19 @@ if st.session_state.analysis_run:
                     optimal_pit_laps_str = f"{optimal_pit_lap_1}, {optimal_pit_lap_2}"
                 
                 st.success(f"**Optimal Strategy Found:** A **{optimal_strategy_name}** strategy, pitting on lap(s) **{optimal_pit_laps_str}**.")
-                # Convert total seconds (float) to MM:SS:MS format
-                total_minutes = int(optimal_time_seconds // 60)
-                remaining_seconds = optimal_time_seconds % 60
-                whole_seconds = int(remaining_seconds)
-                milliseconds = int((remaining_seconds - whole_seconds) * 1000)
+                # Convert total seconds (float) to HH:MM:SS format
+                # First, round to the nearest whole second
+                total_seconds_int = int(round(optimal_time_seconds))
 
-                # Create the formatted string
-                formatted_time_str = f"{total_minutes}:{whole_seconds:02d}:{milliseconds:03d}"
+                # Calculate hours, minutes, and seconds
+                hours = total_seconds_int // 3600
+                minutes = (total_seconds_int % 3600) // 60
+                seconds = total_seconds_int % 60
 
-                st.info(f"Predicted total race time: **{formatted_time_str} (min:sec:ms)**.")
+                # Create the formatted string, padding with leading zeros where needed
+                formatted_time_str = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+
+                st.info(f"Predicted total race time: **{formatted_time_str} (HH:MM:SS)**.")
             else:
                 st.warning("Could not find any viable strategies based on the data.")
 
@@ -338,6 +341,7 @@ if st.session_state.analysis_run:
             
 
     
+
 
 
 
