@@ -142,10 +142,7 @@ year = st.sidebar.number_input("Year", value=2023, min_value=2018)
 race = st.sidebar.text_input("Race Name", value="Bahrain")
 
 ## --- Sidebar for user inputs ---
-session_type = st.sidebar.selection(
-    "Select Session to Analyze:",
-    options=['Race', 'FP1', 'FP2', 'FP3', 'Qualifying']
-)
+session_type = st.sidebar.selectbox("Select Session to Analyze:", options=['Race', 'FP1', 'FP2', 'FP3', 'Qualifying'])
 total_laps = st.sidebar.number_input("Total Laps", value=57)
 pit_stop_loss = st.sidebar.number_input("Pit Stop Time Loss (s)", value=22.0)
 base_lap_time = st.sidebar.number_input("Base Lap Time (s)", value=99.5)
@@ -312,6 +309,7 @@ st.pyplot(fig)
             
 
     
+
 
 
 
