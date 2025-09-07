@@ -207,7 +207,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
                 
                 st.success(f"**Optimal Strategy Found:** A **{optimal_strategy_name}** strategy, pitting on lap(s) **{optimal_pit_laps_str}**.")
                 st.info(f"Predicted total race time: **{optimal_time_seconds / 60:.2f} minutes**.")
-            else:
+        else:
                 st.warning("Could not find any viable strategies based on the available data.")
 
         # --- Interactive Deep Dive in an Expander (Full Width) ---
@@ -249,6 +249,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
             
 
     
+
 
 
 
