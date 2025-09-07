@@ -260,7 +260,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
             )
         
             if selected_drivers and compound_to_analyze:
-            fig, ax = plt.subplots(figsize=(10, 6))
+                fig, ax = plt.subplots(figsize=(10, 6))
             for driver in selected_drivers:
                 stint_data = laps_data.pick_driver(driver).loc[laps_data['Compound'] == compound_to_analyze].copy()
                 stint_data = stint_data.loc[stint_data['PitInTime'].isnull() & stint_data['PitOutTime'].isnull()].copy()
@@ -298,6 +298,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
             
 
     
+
 
 
 
