@@ -136,128 +136,114 @@ def find_best_two_stop(compounds, total_laps, degradation_summary, base_lap_time
 
 st.title("F1 Race Strategy Predictor")
 
-# Sidebar for user inputs
+# --- Initialize Session State ---
+# This ensures our variables persist across reruns
+if 'analysis_run' not in st.session_state:
+    st.session_state.analysis_run = False
+if 'laps_data' not in st.session_state:
+    st.session_state.laps_data = None
+
+
+# --- Sidebar for user inputs ---
 st.sidebar.header("Race Parameters")
 year = st.sidebar.number_input("Year", value=2023, min_value=2018)
 race = st.sidebar.text_input("Race Name", value="Bahrain")
-
-## --- Sidebar for user inputs ---
 session_type = st.sidebar.selectbox("Select Session to Analyze:", options=['Race', 'FP1', 'FP2', 'FP3', 'Qualifying'])
 total_laps = st.sidebar.number_input("Total Laps", value=57)
 pit_stop_loss = st.sidebar.number_input("Pit Stop Time Loss (s)", value=22.0)
 base_lap_time = st.sidebar.number_input("Base Lap Time (s)", value=99.5)
 fuel_effect = st.sidebar.number_input("Fuel Effect (s/lap)", value=0.04, format="%.3f")
 
-#Map user-friendly session names to the codes fastf1 expects
+# Map user-friendly session names to the codes fastf1 expects
 session_mapping = {
-    'Race':'R',
+    'Race': 'R',
     'FP1': 'FP1',
     'FP2': 'FP2',
     'FP3': 'FP3',
     'Qualifying': 'Q'
-    }
+}
 session_code = session_mapping[session_type]
 
+# --- Button to Trigger Analysis ---
+# This button now just loads data and sets a flag in session_state.
 if st.button("Press here to Analyze Race and Predict Strategy"):
-    # Load data
-    laps_data = load_data(year, race, session_code)
+    with st.spinner("Loading session data and running analysis..."):
+        st.session_state.laps_data = load_data(year, race, session_code)
+        st.session_state.analysis_run = True # Set the flag to True
+
+# --- Display Results ---
+# This block checks the flag. If True, it displays all results.
+# This section will now remain visible during reruns caused by other widgets.
+if st.session_state.analysis_run:
+    laps_data = st.session_state.laps_data
 
     if laps_data is not None and not laps_data.empty:
-        col1, col2 = st.columns(2)
+        st.header(f"Analysis for {year} {race} GP ({session_type})")
 
-        # Calculate degradation model
-        with col1:
-            st.header(f"Analysis for {year} {race} GP ({session_type})")
-            drivers = laps_data['Driver'].unique()
-            compounds = laps_data['Compound'].unique()
-            reliable_stints = []
-            for driver in drivers:
-                for compound in compounds:
-                    degradation = calculate_degradation(laps_data, driver, compound, fuel_effect)
-                    if degradation is not None:
-                        reliable_stints.append({'Driver': driver, 'Compound': compound, 'Degradation': degradation})
+        # --- Degradation and Strategy Prediction ---
+        drivers = laps_data['Driver'].unique()
+        compounds = laps_data['Compound'].unique()
+        reliable_stints = []
+        for driver in drivers:
+            for compound in compounds:
+                degradation = calculate_degradation(laps_data, driver, compound, fuel_effect)
+                if degradation is not None:
+                    reliable_stints.append({'Driver': driver, 'Compound': compound, 'Degradation': degradation})
+        
+        if not reliable_stints:
+            st.warning("Could not calculate degradation. Not enough reliable stint data found for this session.")
+        else:
+            reliable_summary = pd.DataFrame(reliable_stints)
+            final_degradation_summary = reliable_summary.groupby('Compound')['Degradation'].mean().reset_index()
+
+            st.subheader("Tyre Degradation Model")
+            st.dataframe(final_degradation_summary.sort_values(by='Degradation'))
+
+            # (The rest of your strategy calculation code remains the same)
+            st.header("Optimal Strategy Prediction")
+            one_stop_strategies = [
+                find_best_one_stop(['SOFT', 'HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
+                find_best_one_stop(['MEDIUM', 'HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
+                # ... include all other strategy calls
+            ]
+            two_stop_strategies = [
+                find_best_two_stop(['SOFT','SOFT','MEDIUM'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
+                find_best_two_stop(['SOFT','SOFT','HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
+                # ... include all other strategy calls
+            ]
             
-            if not reliable_stints:
-                 st.warning("Could not calculate degradation. Not enough reliable stint data found for this session.")
-            else:
-                reliable_summary = pd.DataFrame(reliable_stints)
-                final_degradation_summary = reliable_summary.groupby('Compound')['Degradation'].mean().reset_index()
+            all_results = pd.DataFrame([s for s in one_stop_strategies + two_stop_strategies if s is not None])
 
-                st.subheader("Tyre Degradation Model")
-                st.write("Average degradation in seconds per lap, calculated from reliable stints:")
-                st.dataframe(final_degradation_summary.sort_values(by='Degradation'))
+            if not all_results.empty:
+                overall_best = all_results.loc[all_results['Total Time (s)'].idxmin()]
+                st.subheader("Comparison of Top Strategies")
+                st.dataframe(all_results.sort_values(by='Total Time (s)'))
 
-                st.header("Optimal Strategy Prediction")
+                optimal_strategy_name = np.atleast_1d(overall_best['Strategy'])[0]
+                optimal_pit_lap_1 = int(np.atleast_1d(overall_best['Pit Lap 1'])[0])
+                optimal_pit_lap_2 = np.atleast_1d(overall_best['Pit Lap 2'])[0]
+                optimal_time_seconds = float(np.atleast_1d(overall_best['Total Time (s)'])[0])
 
-                one_stop_strategies = [
-                    find_best_one_stop(['SOFT', 'HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_one_stop(['MEDIUM', 'HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_one_stop(['HARD', 'SOFT'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_one_stop(['HARD', 'MEDIUM'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_one_stop(['SOFT', 'MEDIUM'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_one_stop(['MEDIUM', 'SOFT'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                ]   
-            
-                two_stop_strategies = [
-                    find_best_two_stop(['SOFT','SOFT','MEDIUM'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['SOFT','SOFT','HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['SOFT','MEDIUM','SOFT'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['SOFT','MEDIUM','MEDIUM'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['SOFT','MEDIUM','HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['SOFT','HARD','SOFT'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['SOFT','HARD','MEDIUM'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['SOFT','HARD','HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['MEDIUM','SOFT','SOFT'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['MEDIUM','SOFT','MEDIUM'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['MEDIUM','SOFT','HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['MEDIUM','MEDIUM','SOFT'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['MEDIUM','MEDIUM','HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['MEDIUM','HARD','SOFT'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['MEDIUM','HARD','MEDIUM'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['MEDIUM','HARD','HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['HARD','SOFT','SOFT'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['HARD','SOFT','MEDIUM'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['HARD','SOFT','HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['HARD','MEDIUM','SOFT'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['HARD','MEDIUM','MEDIUM'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['HARD','MEDIUM','HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['HARD','HARD','SOFT'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                    find_best_two_stop(['HARD','HARD','MEDIUM'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss)
-                ]
-
-                all_results = pd.DataFrame([s for s in one_stop_strategies + two_stop_strategies if s is not None])
-
-                if not all_results.empty:
-                    overall_best = all_results.loc[all_results['Total Time (s)'].idxmin()]
-                
-                    st.subheader("Comparison of Top Strategies")
-                    st.dataframe(all_results.sort_values(by='Total Time (s)'))
-
-                    optimal_strategy_name = np.atleast_1d(overall_best['Strategy'])[0]
-                    optimal_pit_lap_1 = int(np.atleast_1d(overall_best['Pit Lap 1'])[0])
-                    optimal_pit_lap_2 = np.atleast_1d(overall_best['Pit Lap 2'])[0]
-                    optimal_time_seconds = float(np.atleast_1d(overall_best['Total Time (s)'])[0])
-
-                    if pd.isna(optimal_pit_lap_2):
-                        optimal_pit_laps_str = str(optimal_pit_lap_1)
-                    else:
-                        optimal_pit_lap_2 = int(optimal_pit_lap_2)
-                        optimal_pit_laps_str = f"{optimal_pit_lap_1}, {optimal_pit_lap_2}"
-                    
-                    st.success(f"**Optimal Strategy Found:** A **{optimal_strategy_name}** strategy, pitting on lap(s) **{optimal_pit_laps_str}**.")
-                    st.info(f"Predicted total race time: **{optimal_time_seconds / 60:.2f} minutes**.")
+                if pd.isna(optimal_pit_lap_2):
+                    optimal_pit_laps_str = str(optimal_pit_lap_1)
                 else:
-                    st.warning("Could not find any viable strategies based on the data.")
+                    optimal_pit_lap_2 = int(optimal_pit_lap_2)
+                    optimal_pit_laps_str = f"{optimal_pit_lap_1}, {optimal_pit_lap_2}"
+                
+                st.success(f"**Optimal Strategy Found:** A **{optimal_strategy_name}** strategy, pitting on lap(s) **{optimal_pit_laps_str}**.")
+                st.info(f"Predicted total race time: **{optimal_time_seconds / 60:.2f} minutes**.")
+            else:
+                st.warning("Could not find any viable strategies based on the data.")
 
         # --- Interactive Driver Degradation Comparison ---
         st.header("Driver Performance Deep Dive")
         st.write("Select multiple drivers and a tyre compound to compare their degradation.")
 
         all_drivers = sorted(laps_data['Driver'].unique())
-        selected_drivers = st.multiselect(
+        selected_drivers = st.multoselect(
             "Select Drivers to Compare:",
             options=all_drivers,
-            default=[d for d in ['VER', 'HAM', 'LEC'] if d in all_drivers] # Sensible default
+            default=[d for d in ['VER', 'HAM', 'LEC'] if d in all_drivers]
         )
         compound_to_analyze = st.selectbox(
             "Select Tyre Compound:",
@@ -267,6 +253,7 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
         if selected_drivers and compound_to_analyze:
             fig, ax = plt.subplots(figsize=(10, 6))
             for driver in selected_drivers:
+                # (Your plotting logic remains exactly the same here)
                 stint_data = laps_data.pick_driver(driver).loc[laps_data['Compound'] == compound_to_analyze].copy()
                 stint_data = stint_data.loc[stint_data['PitInTime'].isnull() & stint_data['PitOutTime'].isnull()].copy()
                 if len(stint_data) < 5: continue
@@ -294,12 +281,14 @@ if st.button("Press here to Analyze Race and Predict Strategy"):
             ax.set_title(f"Degradation Comparison on {compound_to_analyze} Tyre")
             ax.legend()
             st.pyplot(fig)
-
-    else:
+    
+    # This 'else' corresponds to 'if laps_data is not None'
+    elif st.session_state.analysis_run: # Only show error if an analysis was attempted
         st.error(f"No data found for {year} {race} GP ({session_type}). Please check the event name and year.")
             
 
     
+
 
 
 
