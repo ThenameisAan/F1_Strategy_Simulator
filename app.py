@@ -145,7 +145,6 @@ if 'laps_data' not in st.session_state:
 
 
 # --- Sidebar for user inputs ---
-# --- Sidebar for user inputs ---
 st.sidebar.header("Race Parameters")
 year = st.sidebar.number_input("Year", value=2023, min_value=2018)
 race = st.sidebar.text_input("Race Name", value="Bahrain")
@@ -186,7 +185,6 @@ session_mapping = {
 session_code = session_mapping[session_type]
 
 # --- Button to Trigger Analysis ---
-# This button now just loads data and sets a flag in session_state.
 if st.button("Press here to Analyze Race and Predict Strategy"):
     with st.spinner("Loading session data and running analysis..."):
         st.session_state.laps_data = load_data(year, race, session_code)
@@ -220,17 +218,39 @@ if st.session_state.analysis_run:
             st.subheader("Tyre Degradation Model")
             st.dataframe(final_degradation_summary.sort_values(by='Degradation'))
 
-            # (The rest of your strategy calculation code remains the same)
+            
             st.header("Optimal Strategy Prediction")
-            one_stop_strategies = [
-                find_best_one_stop(['SOFT', 'HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                find_best_one_stop(['MEDIUM', 'HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                # ... include all other strategy calls
+
+            # --- Generate All Possible Strategy Combinations ---
+            
+            # Define the available tyre compounds for the race
+            compounds = ['SOFT', 'MEDIUM', 'HARD']
+            
+            # Generate all valid one-stop strategies (using two different compounds)
+            one_stop_combinations = [
+                (c1, c2) for c1 in compounds for c2 in compounds if c1 != c2
             ]
+
+            # Generate all valid two-stop strategies (must use at least two different compounds)
+            two_stop_combinations = [
+                (c1, c2, c3) for c1 in compounds for c2 in compounds for c3 in compounds
+                if len(set([c1, c2, c3])) >= 2
+            ]
+
+            # --- Simulate and Collect Strategy Results ---
+
+            # Simulate all one-stop strategies
+            one_stop_strategies = [
+                find_best_one_stop(
+                    list(combo), total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss
+                ) for combo in one_stop_combinations
+            ]
+            
+            # Simulate all two-stop strategies
             two_stop_strategies = [
-                find_best_two_stop(['SOFT','SOFT','MEDIUM'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                find_best_two_stop(['SOFT','SOFT','HARD'], total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss),
-                # ... include all other strategy calls
+                find_best_two_stop(
+                    list(combo), total_laps, final_degradation_summary, base_lap_time, fuel_effect, pit_stop_loss
+                ) for combo in two_stop_combinations
             ]
             
             all_results = pd.DataFrame([s for s in one_stop_strategies + two_stop_strategies if s is not None])
@@ -318,6 +338,7 @@ if st.session_state.analysis_run:
             
 
     
+
 
 
 
