@@ -46,6 +46,9 @@ This project is a data-driven tool built with Python to analyze real Formula 1 r
 </ul>
 
 <h4> Installation </h4>
+
+<p>You can directly access the web app from this link: https://f1strategysimulator-6sxj7sypamnqf7iamcplzl.streamlit.app/ or follow the steps below to run it locally on your device.</p>
+
 <p>1. Clone the repository</p>
 <p><i>git clone [https://github.com/ThenameisAan/F1_Strategy_Simulator.git](https://github.com/ThenameisAan/F1_Strategy_Simulator.git)
 cd F1_Strategy_Simulator</i></p>
