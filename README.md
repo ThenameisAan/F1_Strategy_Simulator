@@ -18,7 +18,7 @@ This project is a data-driven tool built with Python to analyze real Formula 1 r
 <p> The process starts by sourcing granular lap by lap data for a given race using the fastf1 library. This raw data has discrepancies and not suitable for data analysis. The first step is to clean it by:</p>
 <ul>
   <li>Filtering out laps that are not represtative fo a car's true pace, such as pit in laps and pit out laps.</li>
-  <li>Removing laps completed under Safety Car or Virtual Safety Car conditions, which are indentifies as significant outliers.</li>
+  <li>Removing laps completed under Safety Car or Virtual Safety Car conditions, which are indentified as significant outliers.</li>
 </ul>
 <h4>2. Modelling Tyre Performance</h4>
 <p>The core of the predictor is a robust model of a tyre performance. A key insight during this project was that the raw lap times are misleading; at the start of a race, cars get faster each lap as they burn fuel, masking the effect of tyre wear. </p>
