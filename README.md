@@ -1,5 +1,6 @@
 <h1>F1 Race Strategy Simulator & Predictor</h1>
-<img width="1915" height="876" alt="image" src="https://github.com/user-attachments/assets/61744019-85ec-4196-b940-9115b7368cb5" />
+<img width="1920" height="2673" alt="screencapture-f1strategysimulator-6sxj7sypamnqf7iamcplzl-streamlit-app-2025-09-09-00_19_18" src="https://github.com/user-attachments/assets/a4da396f-7f82-4883-9ba2-66bf86a2039b" />
+
 
 This project is a data-driven tool built with Python to analyze real Formula 1 race data, model tyre performance, and predict the optimal pit stop strategy. The application takes raw lap-by-lap data from an F1 Grand Prix, calculates the true degradation rate of each tyre compound while correcting for confounding variables like fuel load, and simulates thousands of potential strategies to find the fastest way to the finish line. The entire analysis is presented in an interactive web application built with Streamlit.
 </p>
