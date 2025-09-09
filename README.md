@@ -57,7 +57,7 @@ This project is a data-driven tool built with Python to analyze real Formula 1 r
 <p>To launch the interactive dashboard, run the following command in your terminal: </p>
 <p><i>streamlit run app.py</i></p>
 
-<h4>Video Tutorial:</h4> 
+<h4>Video Tutorial:</h4> https://youtu.be/grfUpgLaxj0 
 <h4>Future Improvements</h4>
 <ul>
   <li> Context Awareness Penalties: Adding penalties for traffic, tyre warm-up, and track position value to create an even more realistic simulation</li>
