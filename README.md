@@ -33,9 +33,11 @@ Making the wrong call can cost a team millions in prize money and championship p
 <ul>
   <li>Languages: Python
   <li>Libraries & Frameworks:
+    <ul>
     <li>Data Analysis & Modeling: Pandas (for data manipulation), NumPy (for numerical operations), Matplotlib (for visualization).</li>
     <li>F1 Data API: fastf1 (for sourcing race data).</li>
     <li>Web Application: Streamlit (for building the interactive dashboard).</li>
+    </ul>
 </li> 
 </ul>
 
