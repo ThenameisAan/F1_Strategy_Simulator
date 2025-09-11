@@ -31,8 +31,12 @@ Making the wrong call can cost a team millions in prize money and championship p
 
 <h2>4. Skills</h2>
 <ul>
-  <li>Languages: Python</li>
-  <li>Libraries & Frameworks:</li>
+  <li>Languages: Python
+  <li>Libraries & Frameworks:
     <li>Data Analysis & Modeling: Pandas (for data manipulation), NumPy (for numerical operations), Matplotlib (for visualization).</li>
+    <li>F1 Data API: fastf1 (for sourcing race data).</li>
+    <li>Web Application: Streamlit (for building the interactive dashboard).</li>
+</li>
+</li> 
 </ul>
 
