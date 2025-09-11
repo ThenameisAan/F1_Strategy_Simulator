@@ -64,9 +64,8 @@ This result was validated by the fact that the actual winning race time was with
 While the model has proven to be highly accurate, its predictions could be further enhanced by incorporating more real-world racing context. If I had more time, the next steps would be to:
 <ul>
 <li>Model Non-Linear Degradation: Implement a more complex model (e.g., polynomial regression) to better capture the "cliff" where tyre performance can drop off sharply at the end of a stint.
+<li>Incorporate "Race-Craft" Penalties: Add context-aware time penalties to the simulation to account for factors like:</li>
   <ul>
-  <li>Incorporate "Race-Craft" Penalties: Add context-aware time penalties to the simulation to account for factors like:</li>
-
   <li>Track Position: The strategic cost of losing the lead on tracks where overtaking is difficult.</li>
 
   <li>Traffic: The time lost when a driver rejoins the race behind a group of slower cars.</li>
