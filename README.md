@@ -21,11 +21,18 @@ Making the wrong call can cost a team millions in prize money and championship p
 <h2>3. Methodology</h2>
 <p>To solve this business problem, a four-step data analysis and simulation methodology was employed:
 
-Data Ingestion and Cleaning: Sourced raw, lap-by-lap data from real F1 sessions using the fastf1 library. This noisy data was cleaned to remove non-representative laps, such as those during pit stops or Safety Car periods, using a median-based outlier detection rule (the 107% rule).
+1. Data Ingestion and Cleaning: Sourced raw, lap-by-lap data from real F1 sessions using the fastf1 library. This noisy data was cleaned to remove non-representative laps, such as those during pit stops or Safety Car periods, using a median-based outlier detection rule (the 107% rule).
 
-Predictive Modeling (Linear Regression): Modeled the performance of the key asset (tyres). The biggest challenge was correcting for a major confounding variable: the car's fuel load. As a car gets lighter, it gets faster, masking the true rate of tyre wear. A "fuel-corrected lap time" was calculated to isolate the tyre degradation, and a linear regression model was fitted to this clean data to determine the performance loss in seconds per lap for each tyre compound.
+2. Predictive Modeling (Linear Regression): Modeled the performance of the key asset (tyres). The biggest challenge was correcting for a major confounding variable: the car's fuel load. As a car gets lighter, it gets faster, masking the true rate of tyre wear. A "fuel-corrected lap time" was calculated to isolate the tyre degradation, and a linear regression model was fitted to this clean data to determine the performance loss in seconds per lap for each tyre compound.
 
-Simulation & Optimization: Developed a simulation engine that uses the degradation model to predict the total time for any given strategy. An automated search algorithm (using nested loops) was implemented to exhaustively test thousands of one-stop and two-stop combinations to find the true optimum.
+3. Simulation & Optimization: Developed a simulation engine that uses the degradation model to predict the total time for any given strategy. An automated search algorithm (using nested loops) was implemented to exhaustively test thousands of one-stop and two-stop combinations to find the true optimum.
 
-Dashboarding & Visualization: The entire analysis was wrapped in an interactive dashboard using Streamlit. This allows a user to select a race, see the underlying tyre model, and view the final strategic recommendations. A key feature is the "Driver Performance Deep Dive," which provides a head-to-head visual comparison of how different drivers managed their tyres.</p>
+4. Dashboarding & Visualization: The entire analysis was wrapped in an interactive dashboard using Streamlit. This allows a user to select a race, see the underlying tyre model, and view the final strategic recommendations. A key feature is the "Driver Performance Deep Dive," which provides a head-to-head visual comparison of how different drivers managed their tyres.</p>
+
+<h2>4. Skills</h2>
+<ul>
+  <li>Languages: Python</li>
+  <li>Libraries & Frameworks:</li>
+    <li>Data Analysis & Modeling: Pandas (for data manipulation), NumPy (for numerical operations), Matplotlib (for visualization).</li>
+</ul>
 
