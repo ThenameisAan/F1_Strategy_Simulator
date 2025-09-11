@@ -8,4 +8,14 @@
 <p>In Formula 1, race strategy is a multi-million dollar decision made under extreme pressure. This project addresses the core business problem of identifying the fastest possible strategy from thousands of combinations.
 The solution is a Python-based application that models the performance of a key depreciating asset—the tyres. By analyzing practice session data, the model predicts tyre wear, simulates every viable one-stop and two-stop strategy, and provides a clear, data-driven recommendation for the optimal approach. When validated against the 2025 Monza Grand Prix, the model's predicted optimal race time was within 2 second of the actual winning time, demonstrating its high accuracy and business value.</p>
 
+<h2>2. Business Problem</h2>
+<p>Formula 1 is a sport of marginal gains where strategic decisions can be more impactful than the raw speed of the car. The central challenge for any team strategist is to determine the optimal time to make a pit stop.
+
+<ul>
+  <li>Pitting too early might provide a short-term advantage but results in longer, slower stints on worn tyres later in the race.</li>
+  <li>Pitting too late means losing valuable time to competitors on fresher, faster tyres.</li>
+</ul>
+
+Making the wrong call can cost a team millions in prize money and championship points. This project aims to solve this problem by moving beyond intuition and using a data-driven approach to find the mathematically fastest way to complete a race.</p>
+
 
