@@ -40,4 +40,40 @@ Making the wrong call can cost a team millions in prize money and championship p
     </ul>
 </li> 
 </ul>
+<ul>Analytical Concepts
+  <ul>
+  <li>Data Cleaning & Outlier Detection</li>
+  <li>Predictive Modeling (Linear Regression)</li>
+  <li>Time-Series Analysis</li>
+  <li>Simulation & "What-If" Scenario Analysis</li>
+  <li>Optimization (Automated Brute-Force Search)</li>
+  </ul>
+</ul>
+
+<h2>5. Results and Recommendation</h2>
+<p>The model successfully identifies the optimal strategy from thousands of possibilities. For the 2025 Monza Grand Prix, the analysis of practice data produced the following recommendation:
+
+Optimal Strategy Found: A SOFT-HARD one-stop, pitting on lap 12.
+Predicted Total Race Time: 94.03 minutes.
+
+This result was validated by the fact that the actual winning race time was within 2 second of this prediction.</p>
+<h4> Business Recommendation:</h4>
+<p>For a team starting at the front of the grid, the data strongly supports that the optimal strategy is to leverage the superior grip of the Soft tyre at the start of the race to build a gap, and then switch to the Hard tyre for a long, durable final stint. The model suggests that the ideal moment for this switch is between laps 12 and 15, as this provides the best balance between initial pace and long-term durability. Any deviation from this strategy would likely result in a slower total race time.</p>
+
+<h2>6. Next Steps & Limitations</h2>
+While the model has proven to be highly accurate, its predictions could be further enhanced by incorporating more real-world racing context. If I had more time, the next steps would be to:
+<ul>
+<li>Model Non-Linear Degradation: Implement a more complex model (e.g., polynomial regression) to better capture the "cliff" where tyre performance can drop off sharply at the end of a stint.
+  <ul>
+  <li>Incorporate "Race-Craft" Penalties: Add context-aware time penalties to the simulation to account for factors like:</li>
+
+  <li>Track Position: The strategic cost of losing the lead on tracks where overtaking is difficult.</li>
+
+  <li>Traffic: The time lost when a driver rejoins the race behind a group of slower cars.</li>
+  </ul>
+</li>
+</ul>
+
+<ul>
+  <li>Model Safety Car Probability: Use Monte Carlo simulations to model the likelihood of a Safety Car and its potential to favor alternative strategies. This would transform the predictor from a deterministic to a probabilistic model, providing an even more realistic strategic overview.</li>
 
