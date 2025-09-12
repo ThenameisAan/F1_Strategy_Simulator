@@ -2,6 +2,9 @@
 <img width="1920" height="2673" alt="screencapture-f1strategysimulator-6sxj7sypamnqf7iamcplzl-streamlit-app-2025-09-09-00_19_18" src="https://github.com/user-attachments/assets/a4da396f-7f82-4883-9ba2-66bf86a2039b" />
 
 <p>This project applies data science principles to the high-stakes world of Formula 1, demonstrating a full pipeline from data ingestion and cleaning to predictive modeling, simulation, and business-focused recommendations. The final result is an interactive Streamlit dashboard that finds the optimal pit stop strategy for any given F1 race.
+
+Dashboard: https://f1strategysimulator-6sxj7sypamnqf7iamcplzl.streamlit.app/
+Video Tutorial: https://www.youtube.com/watch?v=grfUpgLaxj0
 </p>
 
 <h2>1. Executive Summary</h2>
